@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kupac;
 use Illuminate\Http\Request;
+use App\Http\Resources\KupacResource;
 
 class KupacController extends Controller
 {
@@ -14,7 +15,8 @@ class KupacController extends Controller
      */
     public function index()
     {
-        //
+        $kupci = Kupac::all();
+        return KupacResource::collection($kupci);
     }
 
     /**
@@ -46,7 +48,7 @@ class KupacController extends Controller
      */
     public function show(Kupac $kupac)
     {
-        //
+        return new KupacResource($kupac);
     }
 
     /**

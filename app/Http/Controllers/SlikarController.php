@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Slikar;
 use Illuminate\Http\Request;
+use App\Http\Resources\SlikarResource;
+use Illuminate\Support\Facades\Validator;
 
 class SlikarController extends Controller
 {
@@ -14,7 +16,8 @@ class SlikarController extends Controller
      */
     public function index()
     {
-        //
+        $slikari = Slikar::all();
+        return SlikarResource::collection($slikari);
     }
 
     /**
@@ -46,7 +49,7 @@ class SlikarController extends Controller
      */
     public function show(Slikar $slikar)
     {
-        //
+        return new SlikarResource($slikar);
     }
 
     /**
@@ -69,7 +72,25 @@ class SlikarController extends Controller
      */
     public function update(Request $request, Slikar $slikar)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'ime' => 'required',
+            'prezime' => 'required',
+            'godine' => 'required',
+            'broj_telefona' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $slikar->ime = $request->ime;
+        $slikar->prezime = $request->prezime;
+        $slikar->godine = $request->godine;
+        $slikar->broj_telefona = $request->broj_telefona;
+
+        $slikar->save();
+
+        return response()->json(['Podaci o slikaru su azurirani', new SlikarResource($slikar)]);
     }
 
     /**
@@ -80,6 +101,7 @@ class SlikarController extends Controller
      */
     public function destroy(Slikar $slikar)
     {
-        //
+        $slikar->delete();
+        return response()->json(['Slikar je obrisan iz baze podataka', new SlikarResource($slikar)]);
     }
 }
