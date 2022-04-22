@@ -11,6 +11,14 @@ class Slika extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'naziv',
+        'godina',
+        'cena',
+        'slikar_id',
+        'kupac_id',
+    ];
+
     public function slikar()
     {
         return $this->belongsTo(Slikar::class);

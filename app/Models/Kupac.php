@@ -10,6 +10,13 @@ class Kupac extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'ime',
+        'prezime',
+        'broj_telefona',
+        'email',
+    ];
+
     public function slike()
     {
         return $this->hasMany(Slika::class);

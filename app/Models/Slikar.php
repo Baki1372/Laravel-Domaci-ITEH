@@ -10,6 +10,13 @@ class Slikar extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'ime',
+        'prezime',
+        'godine',
+        'broj_telefona',
+    ];
+
     public function slike()
     {
         return $this->hasMany(Slika::class);

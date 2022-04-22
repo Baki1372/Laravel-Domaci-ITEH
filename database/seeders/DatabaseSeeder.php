@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\SlikarSeeder;
+use Database\Seeders\KupacSeeder;
+use Database\Seeders\SlikaSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $slikarS = new SlikarSeeder();
+        $kupacS = new KupacSeeder();
+        $slikaS = new SlikaSeeder();
+
+        $slikarS->run();
+        $kupacS->run();
+        $slikaS->run();
     }
 }
