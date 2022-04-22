@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthentificationController;
 use App\Http\Controllers\KupacController;
 use App\Http\Controllers\SlikarController;
 use Illuminate\Http\Request;
@@ -16,9 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('slikar', SlikarController::class);
-Route::resource('kupac', KupacController::class);
+Route::post('register', [AuthentificationController::class, 'register']);
+Route::post('login', [AuthentificationController::class, 'login']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::resource('slikar', SlikarController::class);
+    Route::resource('kupac', KupacController::class);
+    Route::post('logout', [AuthentificationController::class, 'logout']);
 });
